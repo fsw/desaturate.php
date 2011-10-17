@@ -1,0 +1,22 @@
+body {
+  background: LightGreen;
+  padding: 20px;
+  width: 700px;
+  margin: 0px auto;
+}
+
+h1 {
+  color: #f23546;
+  border: 3px solid red;
+  background: rgb(10%,100%,5%);
+}
+
+h2 {
+  color: rgb(10, 123,27);
+  border: 4px solid #FF3;
+  background: white;
+}
+
+p {
+  color: blue;
+}

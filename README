@@ -1,0 +1,31 @@
+This single php script can desaturate images and csses using htaccess rewrite rules.
+
+PRE REQUIREMENTS:
+
+* your templates and/or HTML files are not using colours in inline CSS
+* your images and CSS files are regular files served by apache.
+* performance is not your highest priority. ( script is able to cache desaturated images but still needs some resources to process new ones as it does so pixel by pixel with libGD. And even with all files cached apache needs to invoke php for every image/css request so with large number of files and requests this can add some extra load to your web server. )
+
+CONCEPT:
+
+* all CSS files and images are rewrited to “desaturate.php?file=path” script with .htaccess
+* desaturate.php is using regular expressions to desaturate styles and libGD to desaturate images and outputs them
+
+Installation (can be also found in desaturate.php):
+
+* Place desatureate.php on your web server.
+* Add following rewrite rules to your .htaccess
+
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule ^(.*)\.(jpeg|jpg|gif|bmp|png|css)$ desaturate.php?type=$2&file=$1.$2 [L]
+
+* (optional but recommended) edit desaturate.php and point CACHE_DIR constant to writeable directory
+* (optional) If you dont want to edit .htaccess to enable/disable desaturation each time you can edit desaturate.php and make DESATURATE constant be read from a database or so.
+
+CLIENT CACHE PROBLEM
+
+urls to CSSes and images are not changing so if the client previously visited non-desaturated site he might see files cached by his browser and will have to reload the page to see it fully desaturated. If this is a problem for you the only solution I can think of would be to add “?desaturated” and “?notdesaturated” to urls in your templates.
+
+
+
